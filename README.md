@@ -1,6 +1,6 @@
 # IntegerToString
 
-Simple module to convert a number from 0-9999 to it's string representation. To run, `git clone` the repository and navigate to it and run `iex -S mix` to get the interactive shell up and running. When inside the interactive shell, you can call the function as such: `IntegerToString.convert_to_string(999)` and it will output the string representation.
+Simple module to convert a number from 0-9999 to its string representation. To run, `git clone` the repository and navigate to it and run `iex -S mix` to get the interactive shell up and running. When inside the interactive shell, you can call the function as such: `IntegerToString.convert_to_string(999)` and it will output the string representation.
 
 ## Installation
 
