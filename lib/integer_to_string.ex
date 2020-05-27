@@ -40,62 +40,58 @@ defmodule IntegerToString do
     90 => "ninety"
   }
 
-  def convert_to_string(integer) when integer >= 0 and integer <= 9, do: handle_single(integer)
+  def convert(0), do: "zero"
+  def convert(1), do: "one"
+  def convert(2), do: "two"
+  def convert(3), do: "three"
+  def convert(4), do: "four"
+  def convert(5), do: "five"
+  def convert(6), do: "six"
+  def convert(7), do: "seven"
+  def convert(8), do: "eight"
+  def convert(9), do: "nine"
+  def convert(10), do: "ten"
+  def convert(11), do: "eleven"
+  def convert(12), do: "twelve"
+  def convert(13), do: "thirteen"
+  def convert(14), do: "fourteen"
+  def convert(15), do: "fifteen"
+  def convert(16), do: "sixteen"
+  def convert(17), do: "seventeen"
+  def convert(18), do: "eighteen"
+  def convert(19), do: "nineteen"
+  def convert(20), do: "twenty"
+  def convert(30), do: "thirty"
+  def convert(40), do: "fourty"
+  def convert(50), do: "fifty"
+  def convert(60), do: "sixty"
+  def convert(70), do: "seventy"
+  def convert(80), do: "eighty"
+  def convert(90), do: "ninety"
 
-  def convert_to_string(integer) when integer >= 10 and integer <= 99, do: handle_tens(integer)
-
-  def convert_to_string(integer) when integer >= 100 and integer <= 999,
-    do: handle_hundreds(integer)
-
-  def convert_to_string(integer) when integer >= 1000, do: handle_thousands(integer)
-
-  def handle_single(integer) do
-    {_div, val} = get_div_rem(integer, 10)
-    Map.get(@single_ints, val)
-  end
-
-  def handle_tens(integer) when (integer >= 10 and integer <= 20) or rem(integer, 10) == 0 do
-    Map.get(@double_ints, integer)
-  end
-
-  def handle_tens(integer) do
-    {div, val} = get_div_rem(integer, 10)
-    Map.get(@double_ints, div * 10) <> "-" <> Map.get(@single_ints, val)
-  end
-
-  def handle_hundreds(integer) when rem(integer, 100) == 0 do
-    {div, _val} = get_div_rem(integer, 100)
-    Map.get(@single_ints, div) <> " hundred"
-  end
-
-  def handle_hundreds(integer) when rem(integer, 100) >= 10 do
-    {div, val} = get_div_rem(integer, 100)
-    Map.get(@single_ints, div) <> " hundred " <> handle_tens(val)
-  end
-
-  def handle_hundreds(integer) do
-    {div, val} = get_div_rem(integer, 100)
-    Map.get(@single_ints, div) <> " hundred " <> handle_single(val)
-  end
-
-  def handle_thousands(integer) when rem(integer, 1000) == 0 do
+  def convert(integer) when rem(integer, 1000) == 0 do
     {div, _val} = get_div_rem(integer, 1000)
-    Map.get(@single_ints, div) <> " thousand"
+    convert(div) <> " thousand"
   end
 
-  def handle_thousands(integer) when rem(integer, 1000) < 10 do
+  def convert(integer) when integer > 1000 do
     {div, val} = get_div_rem(integer, 1000)
-    Map.get(@single_ints, div) <> " thousand " <> handle_single(val)
+    convert(div) <> " thousand " <> convert(val)
   end
 
-  def handle_thousands(integer) when rem(integer, 1000) < 100 and rem(integer, 1000) >= 10 do
-    {div, val} = get_div_rem(integer, 1000)
-    Map.get(@single_ints, div) <> " thousand " <> handle_tens(val)
+  def convert(integer) when integer >= 100 and integer <= 999 and rem(integer, 100) !== 0 do
+    {div, val} = get_div_rem(integer, 100)
+    convert(div) <> " hundred " <> convert(val)
   end
 
-  def handle_thousands(integer) do
-    {div, val} = get_div_rem(integer, 1000)
-    Map.get(@single_ints, div) <> " thousand " <> handle_hundreds(val)
+  def convert(integer) when rem(integer, 100) == 0 do
+    {div, _val} = get_div_rem(integer, 100)
+    convert(div) <> " hundred"
+  end
+
+  def convert(integer) when integer >= 10 and integer <= 99 do
+    {div, val} = get_div_rem(integer, 10)
+    convert(div * 10) <> "-" <> convert(val)
   end
 
   defp get_div_rem(integer, divisor) do
