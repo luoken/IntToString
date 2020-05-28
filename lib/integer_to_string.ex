@@ -36,14 +36,17 @@ defmodule IntegerToString do
   def convert(80), do: "eighty"
   def convert(90), do: "ninety"
 
-  def convert(integer) when rem(integer, 1000) == 0 do
-    div = div(integer, 1000)
+  def convert(integer) when integer >= 1_000_000,
+    do: "Cannot convert value that is greater than or equal to 1 million"
+
+  def convert(integer) when rem(integer, 1_000) == 0 do
+    div = div(integer, 1_000)
     convert(div) <> " thousand"
   end
 
-  def convert(integer) when integer > 1000 do
-    div = div(integer, 1000)
-    val = rem(integer, 1000)
+  def convert(integer) when integer > 1_000 do
+    div = div(integer, 1_000)
+    val = rem(integer, 1_000)
     convert(div) <> " thousand " <> convert(val)
   end
 
