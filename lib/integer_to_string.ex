@@ -47,15 +47,15 @@ defmodule IntegerToString do
     convert(div) <> " thousand " <> convert(val)
   end
 
-  def convert(integer) when integer >= 100 and integer <= 999 and rem(integer, 100) !== 0 do
-    div = div(integer, 100)
-    val = rem(integer, 100)
-    convert(div) <> " hundred " <> convert(val)
-  end
-
   def convert(integer) when rem(integer, 100) == 0 do
     div = div(integer, 100)
     convert(div) <> " hundred"
+  end
+
+  def convert(integer) when integer >= 100 and integer <= 999 do
+    div = div(integer, 100)
+    val = rem(integer, 100)
+    convert(div) <> " hundred " <> convert(val)
   end
 
   def convert(integer) when integer >= 10 and integer <= 99 do
